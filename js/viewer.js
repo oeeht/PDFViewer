@@ -36,15 +36,15 @@ var SCALE = 1;
 
 var container = document.getElementById('pageContainer');
 
-document.getElementById("scale").value = SCALE;
+//document.getElementById("scale").value = SCALE;
 
 /**
   * Load the pdf to render
   */
 function loadPDF(pdfData)
 {
-  document.getElementById('scale').textContent = Math.floor(SCALE*100) + "%";
   var pdf = PDFJS.getDocument(DEFAULT_URL);
+    SCALE = document.getElementById('scale').value;
   pdf.then(renderPDF);
 }
 
@@ -155,11 +155,21 @@ function ZoomOut() {
 }document.getElementById('zoomOut').addEventListener('click', ZoomOut);
 
 /**
+  * Change zoom
+  */
+function ChangeZoom() {
+  SCALE = document.getElementById('scale').value;
+  ReplaceDiv(PAGE_TO_VIEW);
+  loadPDF(DEFAULT_URL);
+}document.getElementById('scale').addEventListener('change', ChangeZoom);
+
+/**
   * Asynchronously downloads PDF.
   */
 PDFJS.getDocument(DEFAULT_URL).then(function (pdfDoc_) {
   pdfDoc = pdfDoc_;
   document.getElementById('page_count').textContent = pdfDoc.numPages;
+  SCALE = document.getElementById('scale').value;
   // Initial/first page rendering
   loadPDF(pdfDoc);
 });
