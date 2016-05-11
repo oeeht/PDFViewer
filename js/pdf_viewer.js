@@ -2225,10 +2225,13 @@ var PDFPageView = (function PDFPageViewClosure() {
         this.canvas.height = 0;
         delete this.canvas;
       }
+/*
 
       this.loadingIconDiv = document.createElement('div');
       this.loadingIconDiv.className = 'loadingIcon';
       div.appendChild(this.loadingIconDiv);
+
+      */
     },
 
     update: function PDFPageView_update(scale, rotation) {

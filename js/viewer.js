@@ -32,7 +32,7 @@ PDFJS.workerSrc = 'build/pdf.worker.js';
 var pdfDoc = null;
 var DEFAULT_URL = '../test.pdf';
 var PAGE_TO_VIEW = 1;
-var SCALE = 1;
+var SCALE = document.getElementById("scale").value;
 
 var container = document.getElementById('pageContainer');
 
@@ -41,18 +41,16 @@ var container = document.getElementById('pageContainer');
 /**
   * Load the pdf to render
   */
-function loadPDF(pdfData)
-{
+function loadPDF(pdfData) {
   var pdf = PDFJS.getDocument(DEFAULT_URL);
-    SCALE = document.getElementById('scale').value;
+  SCALE = document.getElementById('scale').value;
   pdf.then(renderPDF);
 }
 
 /**
   * Get the page to render
   */
-function renderPDF(pdf)
-{
+function renderPDF(pdf) {
   var page = pdf.getPage(PAGE_TO_VIEW);
   page.then(renderPage);
 }
@@ -60,8 +58,7 @@ function renderPDF(pdf)
 /**
   * Render the page
   */
-function renderPage(pdfPage)
-{
+function renderPage(pdfPage) {
     // Creating the page view with default parameters.
     var pdfPageView = new PDFJS.PDFPageView({
       container: container,
@@ -81,8 +78,7 @@ function renderPage(pdfPage)
 /**
   * Delete old div to display the new page
   */
-function ReplaceDiv(oldPage)
-{
+function ReplaceDiv(oldPage) {
   var parent = document.getElementById("pageContainer"); 
   var child = document.getElementById("pageContainer" + oldPage); 
   var del = parent.removeChild(child);
@@ -137,25 +133,25 @@ function LastPage() {
 }document.getElementById('last').addEventListener('click', LastPage);
 
 /**
-  * Zoom in
+  * Zoom in (+)
   */
 function ZoomIn() {
-  SCALE = SCALE + 0.2;
+  document.getElementById("scale").selectedIndex++;
   ReplaceDiv(PAGE_TO_VIEW);
   loadPDF(DEFAULT_URL);
 }document.getElementById('zoomIn').addEventListener('click', ZoomIn);
 
 /**
-  * Zoom out
+  * Zoom out (-)
   */
 function ZoomOut() {
-  SCALE = SCALE - 0.2;
+  document.getElementById("scale").selectedIndex--;
   ReplaceDiv(PAGE_TO_VIEW);
   loadPDF(DEFAULT_URL);
 }document.getElementById('zoomOut').addEventListener('click', ZoomOut);
 
 /**
-  * Change zoom
+  * Change zoom (from selectbox)
   */
 function ChangeZoom() {
   SCALE = document.getElementById('scale').value;
